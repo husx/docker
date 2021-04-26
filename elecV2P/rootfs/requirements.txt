@@ -1,5 +1,3 @@
 requests
 pytz
 rsa
-numpy==1.17.3
-opencv-python==4.5.1.48
