@@ -1,4 +1,4 @@
 requests
 pytz
 rsa
-cv2
+opencv-python 
