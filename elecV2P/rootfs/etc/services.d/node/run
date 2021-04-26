@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+exec /bin/sh -c 'cd /usr/local/app && pm2-runtime index.js'

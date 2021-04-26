@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+
+#启动cron
+exec crond -f -L /dev/null
