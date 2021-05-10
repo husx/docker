@@ -1,4 +1,4 @@
-#2021-5-4
+#2021-5-10
 
 name: Build elecV2P docker Image 
 
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  elecV2P_VER: 3.3.4
+  elecV2P_VER: 3.3.5
 
 jobs:
   buildx:
