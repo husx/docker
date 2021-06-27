@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  elecV2P_VER: 3.3.8
+  elecV2P_VER: 3.4.0
 
 jobs:
   buildx:
