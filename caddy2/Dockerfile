@@ -17,6 +17,7 @@ FROM alpine:latest
 
 ARG S6_VER=2.2.0.3
 ENV TZ=Asia/Shangha
+ENV DOCKER-PROXY=true
 ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 
