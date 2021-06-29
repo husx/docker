@@ -1,0 +1,16 @@
+#caddy reload --config /config/Caddyfile
+{
+  email email@example.com # email for ACME
+  order webdav before file_server # Important, webdav plugin should be ordered before file_server
+}
+
+#webdav.example.com {
+#  encode zstd gzip # optional compression
+#  basicauth { # optional auth
+#    example-user HASHED_PASSWORD
+#  }
+#  webdav {
+#    root /opt/sites/Webdav-Site
+#  }
+#}
+

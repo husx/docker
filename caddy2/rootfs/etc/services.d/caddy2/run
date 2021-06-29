@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv sh
 
 if [ "$docker-proxy" == "true" ];then
-  exec /bin/caddy docker-proxy
+  exec caddy docker-proxy
 else
-  exec /bin/caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+  exec caddy run --config $CADDY_DOCKER_CADDYFILE_PATH --adapter caddyfile
 fi

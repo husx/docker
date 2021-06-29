@@ -28,8 +28,8 @@
 |             参数              | 描述                                                         |
 | :---------------------------: | ------------------------------------------------------------ |
 |             `TZ`              | 设置时区-默认： `Asia/Shanghai`                              |
-|        `DOCKER-PROXY`         | 是否启用caddy-docker-proxy插件，默认：`true`                 |
-| `CADDY_DOCKER_CADDYFILE_PATH` | 定义容器内部Caddyfile位置***（可选）***                      |
+|        `DOCKER-PROXY`         | 是否以caddy-docker-proxy插件启动，默认：`true`               |
+| `CADDY_DOCKER_CADDYFILE_PATH` | 定义容器内部Caddyfile位置，默认：`/config/Caddyfile`         |
 |   `CADDY_INGRESS_NETWORKS`    | 手动配置 caddy 入口网络,未定义时，连接到控制器容器的网络被视为入口网络***（可选）*** |
 
 
@@ -57,10 +57,6 @@ services:
     image: hushunxu/caddy2:latest
     container_name: caddy2
     restart: always
-    networks:
-      - web
-    labels: # Global options
-      - caddy.email=you@example.com
     environment:
       - TZ=Asia/Shanghai
       - DOCKER-PROXY=true
@@ -73,7 +69,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./docker/caddy2/config:/config
       - ./docker/caddy2/data:/data
-      - ./docker/caddy2/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./docker/caddy2/logs:/var/log/caddy
       - ./docker/caddy2/sites:/opt/sites
       

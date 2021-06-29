@@ -5,24 +5,11 @@ ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 echo "$TZ" > /etc/timezone
 
 # 复制默认配置文件
-if [ -s "/etc/caddy/Caddyfile" ];then
-	echo "==>Caddyfile文件已存在。"
+if [ ! -e $CADDY_DOCKER_CADDYFILE_PATH ];then
+    cp /Caddyfile.default $CADDY_DOCKER_CADDYFILE_PATH
+    echo "==>Caddyfile文件已建立。"
 else 
-echo "{
-  email email@example.com # email for ACME
-  order webdav before file_server # Important, webdav plugin should be ordered before file_server
-}
-
-webdav.example.com {
-  encode zstd gzip # optional compression
-  basicauth { # optional auth
-    example-user HASHED_PASSWORD
-  }
-  webdav {
-    root /opt/sites/Webdav-Site
-  }
-}" > /etc/caddy/Caddyfile
-echo "==>Caddyfile文件已建立。"
+	echo "==>Caddyfile文件已存在。"
 fi
 
 
