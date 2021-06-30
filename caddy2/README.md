@@ -1,5 +1,5 @@
 # caddy2
-自用caddy2镜像。以官方docker镜像为基础添加插件。  
+自用caddy2镜像,添加插件。  
 官方项目地址：https://caddyserver.com/  
 
 ## 插件列表
@@ -25,13 +25,11 @@
 ### 环境变量
 下面是可用于自定义安装的可用选项的完整列表。  
 
-|             参数              | 描述                                                         |
-| :---------------------------: | ------------------------------------------------------------ |
-|             `TZ`              | 设置时区-默认： `Asia/Shanghai`                              |
-|        `DOCKER-PROXY`         | 是否以caddy-docker-proxy插件启动，默认：`true`               |
-| `CADDY_DOCKER_CADDYFILE_PATH` | 定义容器内部Caddyfile位置，默认：`/config/Caddyfile`         |
+| 参数 | 描述                            |
+| :--: | ------------------------------- |
+| `TZ` | 设置时区-默认： `Asia/Shanghai` |
+| `CADDY_DOCKER_CADDYFILE_PATH` | 定义容器内部Caddyfile位置，默认不设置         |
 |   `CADDY_INGRESS_NETWORKS`    | 手动配置 caddy 入口网络,未定义时，连接到控制器容器的网络被视为入口网络***（可选）*** |
-
 
 ### 开放的端口
 | 范围 | 描述 |
@@ -57,11 +55,11 @@ services:
     image: hushunxu/caddy2:latest
     container_name: caddy2
     restart: always
+    networks:
+      - web
     environment:
       - TZ=Asia/Shanghai
-      - DOCKER-PROXY=true
       - CADDY_INGRESS_NETWORKS=web
-      - CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile
     ports:
       - "80:80"
       - "443:443"
@@ -69,9 +67,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./docker/caddy2/config:/config
       - ./docker/caddy2/data:/data
-      - ./docker/caddy2/logs:/var/log/caddy
-      - ./docker/caddy2/sites:/opt/sites
-      
+	  
 networks:
   web:
     external: true
