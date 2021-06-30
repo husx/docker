@@ -1,28 +1,24 @@
-FROM golang:alpine as builder
+ARG CADDY_VERSION=2.4.3
+FROM caddy:${CADDY_VERSION}-builder AS builder
 
-RUN apk add -U --no-cache ca-certificates git
-RUN go get -u github.com/caddyserver/xcaddy/cmd/xcaddy 
-RUN CGO_ENABLED=0 xcaddy build \
-  --output artifacts/binaries/linux/caddy \
-  --with github.com/lucaslorentz/caddy-docker-proxy/plugin/v2 \
-  --with github.com/mholt/caddy-webdav \
-  --with github.com/porech/caddy-maxmind-geolocation \
-  --with github.com/caddy-dns/cloudflare \
-  --with github.com/caddy-dns/dnspod \
-  --with github.com/caddy-dns/alidns \
-  --with github.com/caddy-dns/lego-deprecated
-RUN chmod +x artifacts/binaries/linux/caddy
+RUN xcaddy build \
+    --with github.com/lucaslorentz/caddy-docker-proxy/plugin/v2 \
+    --with github.com/mholt/caddy-webdav \
+    --with github.com/porech/caddy-maxmind-geolocation \
+    --with github.com/greenpau/caddy-auth-jwt \
+    --with github.com/caddy-dns/cloudflare \
+    --with github.com/caddy-dns/dnspod \
+    --with github.com/caddy-dns/alidns \
+    --with github.com/caddy-dns/lego-deprecated
 
-FROM alpine:latest
+FROM caddy:${CADDY_VERSION}-alpine
 
 ARG S6_VER=2.2.0.3
 ENV TZ=Asia/Shangha
-ENV XDG_CONFIG_HOME /config
-ENV XDG_DATA_HOME /data
+ENV CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile
 
 ADD rootfs /
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /go/artifacts/binaries/linux/caddy /bin/
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
 RUN apk upgrade --update --no-cache \
 # 安装应用
@@ -38,10 +34,5 @@ RUN apk upgrade --update --no-cache \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/* \
     && rm -rf $HOME/.cache
-
-WORKDIR /
-EXPOSE 80 443 2019
-VOLUME /config
-VOLUME /data
 
 ENTRYPOINT [ "/init" ]

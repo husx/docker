@@ -1,0 +1,27 @@
+#caddy reload --config /config/Caddyfile
+{
+# globally
+  email email@example.com # email for ACME
+  order webdav before file_server # Important, webdav plugin should be ordered before file_server
+  acme_dns alidns {
+    access_key_id {env.ALIYUN_ACCESS_KEY_ID}
+    access_key_secret {env.ALIYUN_ACCESS_KEY_SECRET}
+  }
+}
+
+#webdav.example.com {
+#  encode zstd gzip # optional compression
+#  basicauth { # optional auth
+#    example-user HASHED_PASSWORD
+#  }
+#  webdav {
+#    root /opt/sites/Webdav-Site
+#  }
+#  tls {
+#    dns alidns {
+#      access_key_id {env.ALIYUN_ACCESS_KEY_ID}
+#      access_key_secret {env.ALIYUN_ACCESS_KEY_SECRET}
+#    }
+#  }
+#}
+

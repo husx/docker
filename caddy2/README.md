@@ -1,5 +1,5 @@
 # caddy2
-自用caddy2镜像,添加插件。  
+自用caddy2镜像，在官方镜像基础上添加插件。  
 官方项目地址：https://caddyserver.com/  
 
 ## 插件列表
@@ -8,6 +8,7 @@
 | caddy-docker-proxy/plugin/v2 | https://github.com/lucaslorentz/caddy-docker-proxy | 该插件使 Caddy 能够通过标签用作 Docker 容器的反向代理 |
 |         caddy-webdav         |       https://github.com/mholt/caddy-webdav        |               |
 | caddy-maxmind-geolocation | https://github.com/porech/caddy-maxmind-geolocation |  |
+| caddy-auth-jwt | https://github.com/greenpau/caddy-auth-jwt | |
 | caddy-dns/cloudflare | https://github.com/caddy-dns/cloudflare |  |
 | caddy-dns/dnspod | https://github.com/caddy-dns/dnspod |  |
 | caddy-dns/alidns | https://github.com/caddy-dns/alidns |  |
@@ -28,7 +29,7 @@
 | 参数 | 描述                            |
 | :--: | ------------------------------- |
 | `TZ` | 设置时区-默认： `Asia/Shanghai` |
-| `CADDY_DOCKER_CADDYFILE_PATH` | 定义容器内部Caddyfile位置，默认不设置         |
+| `CADDY_DOCKER_CADDYFILE_PATH` | 定义容器内部Caddyfile位置，默认：`/config/Caddyfile` |
 |   `CADDY_INGRESS_NETWORKS`    | 手动配置 caddy 入口网络,未定义时，连接到控制器容器的网络被视为入口网络***（可选）*** |
 
 ### 开放的端口
@@ -57,17 +58,18 @@ services:
     restart: always
     networks:
       - web
-    environment:
+	environment:
       - TZ=Asia/Shanghai
       - CADDY_INGRESS_NETWORKS=web
+      - CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker/caddy2/config:/config
-      - ./docker/caddy2/data:/data
-	  
+      - /docker/caddy2/config:/config
+      - /docker/caddy2/data:/data
+
 networks:
   web:
     external: true
