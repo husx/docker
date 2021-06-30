@@ -61,7 +61,7 @@ services:
       - TZ=Asia/Shanghai
       - DOCKER-PROXY=true
       - CADDY_INGRESS_NETWORKS=web
-      - CADDY_DOCKER_CADDYFILE_PATH=/etc/caddy/Caddyfile
+      - CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile
     ports:
       - "80:80"
       - "443:443"
