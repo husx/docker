@@ -6,9 +6,9 @@ echo "$TZ" > /etc/timezone
 
 #参考https://github.com/rwv/docker-zerotier-moon
 stableEndpointsForSed=""
-if [ -z ${IPV4_ADDRESS+x} ]
+if [ "$IPV4_ADDRESS" = "" ]
 then # ipv4 address is not set
-        if [ -z ${IPV6_ADDRESS+x} ]
+        if [ "$IPV6_ADDRESS" = "" ]
         then # ipv6 address is not set
                 echo "请设置公网IPv4或IPv6地址。"
                 exit 0
@@ -16,7 +16,7 @@ then # ipv4 address is not set
                 stableEndpointsForSed="\"$IPV6_ADDRESS\/$MOON_PORT\""
         fi
 else # ipv4 address is set
-        if [ -z ${IPV6_ADDRESS+x} ]
+        if [ "$IPV6_ADDRESS" = "" ]
         then # ipv6 address is not set
                 stableEndpointsForSed="\"$IPV4_ADDRESS\/$MOON_PORT\""
         else # ipv6 address is set
