@@ -5,7 +5,7 @@ ARG S6_VER=2.2.0.3
 ENV TZ=Asia/Shanghai \
     MOON_PORT=9993 \
     IPV4_ADDRESS= \
-    IPV6_ADDRESS= \
+    IPV6_ADDRESS=
 
 ADD rootfs /
 
