@@ -58,7 +58,7 @@ services:
     restart: always
     networks:
       - web
-	environment:
+    environment:
       - TZ=Asia/Shanghai
       - CADDY_INGRESS_NETWORKS=web
       - CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile
